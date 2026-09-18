@@ -1,26 +1,215 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Theme primitives — overridden per `data-theme` on `<html>` */
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --theme-canvas: #07070a;
+  --theme-raised: #0b0b0f;
+  --theme-panel: #0e0e13;
+  --theme-panel-hover: #121218;
+
+  --theme-ink: #f2f2f0;
+  --theme-ink-dim: #a3a3ab;
+  --theme-ink-muted: #76767f;
+  --theme-ink-faint: #4d4d56;
+
+  --theme-line-soft: rgba(255, 255, 255, 0.05);
+  --theme-line: rgba(255, 255, 255, 0.09);
+  --theme-line-strong: rgba(255, 255, 255, 0.16);
+
+  --theme-grid-line: rgba(255, 255, 255, 0.028);
+  --theme-vignette: color-mix(in srgb, var(--theme-canvas) 82%, transparent);
+
+  --diagram-edge: color-mix(in srgb, var(--theme-ink) 16%, transparent);
+  --diagram-arrow: color-mix(in srgb, var(--theme-ink) 35%, transparent);
+  --diagram-node-fill: color-mix(in srgb, var(--theme-ink) 4%, transparent);
+  --diagram-node-stroke: color-mix(in srgb, var(--theme-ink) 18%, transparent);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html[data-theme="light"] {
+  color-scheme: light;
+
+  --theme-canvas: #f6f6f4;
+  --theme-raised: #efefec;
+  --theme-panel: #e8e8e4;
+  --theme-panel-hover: #deded9;
+
+  --theme-ink: #0a0a0c;
+  --theme-ink-dim: #45454d;
+  --theme-ink-muted: #6b6b73;
+  --theme-ink-faint: #94949c;
+
+  --theme-line-soft: rgba(0, 0, 0, 0.06);
+  --theme-line: rgba(0, 0, 0, 0.1);
+  --theme-line-strong: rgba(0, 0, 0, 0.16);
+
+  --theme-grid-line: rgba(0, 0, 0, 0.055);
+  --theme-vignette: color-mix(in srgb, var(--theme-canvas) 88%, transparent);
+
+  --diagram-edge: color-mix(in srgb, var(--theme-ink) 14%, transparent);
+  --diagram-arrow: color-mix(in srgb, var(--theme-ink) 40%, transparent);
+  --diagram-node-fill: color-mix(in srgb, var(--theme-ink) 5%, transparent);
+  --diagram-node-stroke: color-mix(in srgb, var(--theme-ink) 16%, transparent);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html:not([data-theme]) {
+  color-scheme: dark;
+
+  --theme-canvas: #07070a;
+  --theme-raised: #0b0b0f;
+  --theme-panel: #0e0e13;
+  --theme-panel-hover: #121218;
+  --theme-ink: #f2f2f0;
+  --theme-ink-dim: #a3a3ab;
+  --theme-ink-muted: #76767f;
+  --theme-ink-faint: #4d4d56;
+  --theme-line-soft: rgba(255, 255, 255, 0.05);
+  --theme-line: rgba(255, 255, 255, 0.09);
+  --theme-line-strong: rgba(255, 255, 255, 0.16);
+  --theme-grid-line: rgba(255, 255, 255, 0.028);
+  --theme-vignette: color-mix(in srgb, var(--theme-canvas) 82%, transparent);
+
+  --diagram-edge: color-mix(in srgb, var(--theme-ink) 16%, transparent);
+  --diagram-arrow: color-mix(in srgb, var(--theme-ink) 35%, transparent);
+  --diagram-node-fill: color-mix(in srgb, var(--theme-ink) 4%, transparent);
+  --diagram-node-stroke: color-mix(in srgb, var(--theme-ink) 18%, transparent);
+}
+
+@theme {
+  --color-canvas: var(--theme-canvas);
+  --color-raised: var(--theme-raised);
+  --color-panel: var(--theme-panel);
+  --color-panel-hover: var(--theme-panel-hover);
+
+  --color-ink: var(--theme-ink);
+  --color-ink-dim: var(--theme-ink-dim);
+  --color-ink-muted: var(--theme-ink-muted);
+  --color-ink-faint: var(--theme-ink-faint);
+
+  --color-line-soft: var(--theme-line-soft);
+  --color-line: var(--theme-line);
+  --color-line-strong: var(--theme-line-strong);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo,
+    monospace;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, "Times New Roman",
+    serif;
+
+  --text-display: clamp(2.5rem, 1.05rem + 6.4vw, 6.75rem);
+  --text-display--line-height: 0.96;
+  --text-display--letter-spacing: -0.04em;
+
+  --text-statement: clamp(1.75rem, 0.95rem + 3.2vw, 3.5rem);
+  --text-statement--line-height: 1.1;
+  --text-statement--letter-spacing: -0.03em;
+
+  --text-heading: clamp(1.5rem, 1rem + 1.8vw, 2.5rem);
+  --text-heading--line-height: 1.12;
+  --text-heading--letter-spacing: -0.025em;
+
+  --text-subheading: clamp(1.125rem, 0.95rem + 0.6vw, 1.375rem);
+  --text-subheading--line-height: 1.3;
+  --text-subheading--letter-spacing: -0.015em;
+
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.16em;
+
+  --text-micro: 0.625rem;
+  --text-micro--line-height: 1;
+  --text-micro--letter-spacing: 0.14em;
+
+  --container-shell: 1400px;
+  --container-reading: 62ch;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    background-color: var(--color-canvas);
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    font-synthesis-weight: none;
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+  }
+
+  main {
+    min-width: 0;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-canvas);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-ink);
+    outline-offset: 3px;
+  }
+
+  section[id] {
+    scroll-margin-top: 6rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility grid-field {
+  background-image:
+    linear-gradient(to right, var(--theme-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--theme-grid-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  background-position: center top;
+}
+
+@utility hairline-x {
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--color-line) 12%,
+    var(--color-line) 88%,
+    transparent
+  );
+}
+
+@utility hairline-y {
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-line) 15%,
+    var(--color-line) 85%,
+    transparent
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
